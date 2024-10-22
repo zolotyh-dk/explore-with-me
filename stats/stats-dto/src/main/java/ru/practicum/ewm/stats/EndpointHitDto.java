@@ -21,7 +21,7 @@ public record EndpointHitDto(
 
         @NotBlank
         @Size(max = 40)
-        String api,
+        String ip,
 
         @NotNull
         @PastOrPresent
