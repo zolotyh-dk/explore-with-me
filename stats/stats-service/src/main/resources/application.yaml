@@ -16,3 +16,7 @@ logging.level:
   org.springframework.orm.jpa: INFO
   org.springframework.transaction: INFO
 server.port: 9090
+
+stats:
+  server:
+    uri: http://localhost:9090

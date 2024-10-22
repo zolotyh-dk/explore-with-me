@@ -1,6 +1,7 @@
 package ru.practicum.ewm.stats;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,12 +15,12 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class StatsClientImpl {
+public class StatsClientImpl implements StatsClient {
     private final RestClient restClient;
 
-    public StatsClientImpl() {
+    public StatsClientImpl(@Value("${stats.server.uri}") String uri) {
         this.restClient = RestClient.builder()
-                .baseUrl("http://localhost:9090")
+                .baseUrl(uri)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
@@ -36,7 +37,7 @@ public class StatsClientImpl {
         }
     }
 
-    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
         log.info("Отправляем запрос на получение статистики с параметрами start={}, end={}, uris={}, unique={}",
                 start, end, uris, unique);
         List<ViewStatsDto> response;
