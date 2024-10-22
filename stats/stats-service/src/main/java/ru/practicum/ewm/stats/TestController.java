@@ -1,4 +1,4 @@
-package ru.practicum.ewm;
+package ru.practicum.ewm.stats;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
