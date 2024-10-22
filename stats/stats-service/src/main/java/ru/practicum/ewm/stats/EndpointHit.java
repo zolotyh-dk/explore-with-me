@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "endpoint_hits")
 @Data
 @EqualsAndHashCode(of = "id")
-class EndpointHit {
+public class EndpointHit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
