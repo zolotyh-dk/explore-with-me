@@ -31,9 +31,10 @@ public class StatsClientImpl implements StatsClient {
             restClient.post()
                     .uri("/hit")
                     .body(endpointHitDto)
-                    .retrieve();
+                    .retrieve()
+                    .toBodilessEntity();
         } catch (RestClientException e) {
-            log.error("Ошибка при выполнении POST запроса /hit {} {}", e.getMessage(), e);
+            log.error("Ошибка при выполнении POST запроса /hit {}", e.getMessage(), e);
         }
     }
 
@@ -53,7 +54,7 @@ public class StatsClientImpl implements StatsClient {
                     .retrieve()
                     .body(new ParameterizedTypeReference<>() {});
         } catch (RestClientException e) {
-            log.error("Ошибка при выполнении GET запроса /stats {} {}", e.getMessage(), e);
+            log.error("Ошибка при выполнении GET запроса /stats {}", e.getMessage(), e);
             response = Collections.emptyList();
         }
         log.info("В ответ на запрос статистики получили {}", response);
