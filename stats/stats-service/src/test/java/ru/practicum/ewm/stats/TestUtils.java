@@ -17,17 +17,35 @@ import java.util.Objects;
 
 final class TestUtils {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
-
     static final long ENDPOINT_HIT_ID = 1L;
     static final String APP = "mainService";
     static final String ENDPOINT = "endpointA";
     static final String IP = "127.0.0.1";
     static final long HITS = 99L;
+    static final LocalDateTime TIMESTAMP = LocalDateTime.of(2000, Month.JANUARY, 31, 13, 30, 55);
     static final LocalDateTime START = LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 1);
     static final LocalDateTime END = LocalDateTime.of(2000, Month.FEBRUARY, 2, 0, 0, 2);
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     private TestUtils() {
+    }
+
+    static EndpointHitDto makeTestEndpointHitDto() {
+        return EndpointHitDto.builder()
+                .app(APP)
+                .uri(ENDPOINT)
+                .ip(IP)
+                .timestamp(TIMESTAMP)
+                .build();
+    }
+
+    static ViewStatsDto makeTestViewStatsDto() {
+        return ViewStatsDto.builder()
+                .app(APP)
+                .uri(ENDPOINT)
+                .hits(HITS)
+                .build();
     }
 
     static EndpointHitProxy makeTestEndpointHit() {
@@ -36,7 +54,7 @@ final class TestUtils {
         endpointHit.setApp(APP);
         endpointHit.setUri(ENDPOINT);
         endpointHit.setIp(IP);
-        endpointHit.setTimestamp(LocalDateTime.of(2000, Month.JANUARY, 31, 13, 30, 55));
+        endpointHit.setTimestamp(TIMESTAMP);
         return endpointHit;
     }
 
