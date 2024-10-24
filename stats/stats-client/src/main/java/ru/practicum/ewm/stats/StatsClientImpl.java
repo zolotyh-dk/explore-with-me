@@ -10,16 +10,19 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
 @Component
 @Slf4j
 public class StatsClientImpl implements StatsClient {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final RestClient restClient;
 
-    public StatsClientImpl(@Value("${stats.server.uri}") String uri) {
-        this.restClient = RestClient.builder()
+    public StatsClientImpl(RestClient.Builder builder, @Value("${stats.server.uri}") String uri) {
+        this.restClient = builder
                 .baseUrl(uri)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
@@ -46,8 +49,8 @@ public class StatsClientImpl implements StatsClient {
             response = restClient.get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/stats")
-                            .queryParam("start", start)
-                            .queryParam("end", end)
+                            .queryParam("start", start.format(FORMATTER))
+                            .queryParam("end", end.format(FORMATTER))
                             .queryParam("uris", uris)
                             .queryParam("unique", unique)
                             .build())
