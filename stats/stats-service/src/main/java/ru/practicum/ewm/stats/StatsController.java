@@ -1,6 +1,7 @@
 package ru.practicum.ewm.stats;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +29,7 @@ class StatsController {
 
     @PostMapping("/hit")
     @ResponseStatus(code = HttpStatus.CREATED)
-    void addEndpointHit(@RequestBody final EndpointHitDto dto, final HttpServletRequest httpRequest) {
+    void addEndpointHit(@RequestBody @Valid final EndpointHitDto dto, final HttpServletRequest httpRequest) {
         logRequest(httpRequest, dto);
         service.addEndpointHit(mapper.mapToEndpointHit(dto));
         logResponse(httpRequest);
