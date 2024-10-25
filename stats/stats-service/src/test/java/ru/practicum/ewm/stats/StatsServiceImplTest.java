@@ -70,10 +70,20 @@ class StatsServiceImplTest {
     }
 
     @Test
-    void testGetViewStatsWhenNoUris() {
+    void testGetViewStatsWhenUrisNull() {
         when(repository.getHits(START, END)).thenReturn(List.of(makeTestViewStats()));
 
         final List<ViewStats> actual = service.getViewStats(START, END, null, false);
+
+        verify(repository).getHits(START, END);
+        assertThat(actual, contains(equalTo(makeTestViewStats())));
+    }
+
+    @Test
+    void testGetViewStatsWhenNoUris() {
+        when(repository.getHits(START, END)).thenReturn(List.of(makeTestViewStats()));
+
+        final List<ViewStats> actual = service.getViewStats(START, END, List.of(), false);
 
         verify(repository).getHits(START, END);
         assertThat(actual, contains(equalTo(makeTestViewStats())));
